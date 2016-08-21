@@ -1,10 +1,14 @@
 defmodule Issues.GithubIssues do
+
+  require Logger
+
   @user_agent [ { "User-agent", "Elixir hello@billiam.io" } ]
   @github_url Application.get_env( :issues, :github_url )
 
   def echo( str ), do: IO.puts str
 
   def fetch( user, project ) do
+    Logger.info "Fetching user #{ user }'s project #{ project }"
     issues_url( user, project )
     |> HTTPoison.get( @user_agent )
     |> handle_response
@@ -15,14 +19,18 @@ defmodule Issues.GithubIssues do
   end
 
   def handle_response( { :ok, %{ status_code: 200, body: body } } ) do
+    Logger.info "Successful response"
+    Logger.debug fn -> inspect( body ) end
     { :ok, parseJson( body ) }
   end
 
   def handle_response( { :error, %{ reason: body } } ) do
+    Logger.error "Error response, reason: #{ body }"
     { :error, parseJson( body ) }
   end
 
   def handle_response( { _, %{ status_code: _, body: body } } ) do
+    Logger.error "Error response, other reason: #{ body }"
     { :error, parseJson( body ) }
   end
 
