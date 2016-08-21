@@ -41,7 +41,7 @@ defmodule Issues.CLI do
     System.halt( 0 )
   end
 
-  def process( { user, project, _count } ) do # _unused variable, compiler ignore
+  def process( { user, project, count } ) do # _unused variable, compiler ignore
     Issues.GithubIssues.fetch( user, project )
     |> decode_response
     |> convert_to_maps
@@ -64,7 +64,7 @@ defmodule Issues.CLI do
 
   def sort_ascending( list ) do
     list
-    |> Enum.sort &( &1["created_at"] <= &2["created_at"] )
+    |> Enum.sort( &( &1["created_at"] <= &2["created_at"] ) )
   end
 
 end
