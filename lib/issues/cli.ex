@@ -8,7 +8,7 @@ defmodule Issues.CLI do
   Handles command line input
   """
 
-  def run( argv ) do
+  def main( argv ) do
     argv
     |> parse_args
     |> process
