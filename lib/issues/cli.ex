@@ -54,10 +54,15 @@ defmodule Issues.CLI do
 
   def decode_response( { :ok, body } ), do: body
 
-  def decode_response( { :error, error } ) do
-    { _, message } = List.keyfind( error, "message", 0 )
+  def decode_response( { :error, err } ) when is_list( err ) do
+    { _, message } = List.keyfind( err, "message", 0 )
     IO.puts "Error fetching from Github: #{ message }"
     System.halt( 2 )
+  end
+
+  def decode_response( { :error, err } ) do
+    error = Enum.to_list( err )
+    decode_response( { :error, error } )
   end
 
   def convert_to_maps( list ) do
