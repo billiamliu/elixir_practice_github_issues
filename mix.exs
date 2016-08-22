@@ -4,7 +4,7 @@ defmodule Issues.Mixfile do
   def project do
     [app: :issues,
      name: "GithubIssues",
-     source_url: "https://github.com/billiam.liu/elixir_practice_github_issues",
+     source_url: "https://github.com/billiamliu/elixir_practice_github_issues",
      escript: escript_config,
      version: "0.0.1",
      elixir: "~> 1.2",
