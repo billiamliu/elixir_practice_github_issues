@@ -2,6 +2,9 @@ defmodule Issues.TableFormatter do
 
   import Enum, only: [ each: 2, map: 2, map_join: 3, max: 1 ]
 
+  @doc """
+  [ usually documentation goes here ]
+  """
   def print_table_for_columns( rows, headers ) do
     with data_by_columns = split_into_columns( rows, headers ),
          column_widths   = widths_of( data_by_columns ),
@@ -13,6 +16,17 @@ defmodule Issues.TableFormatter do
     end
   end
 
+  @doc """
+  Takes a list of rows of keyed list of columns, return the data,
+  filter by list of columns specified in `headers`
+
+  ## Example
+
+  iex> list = [ Enum.into( [ { "a", "1" }, { "b", "2" }, { "c", "3" } ], %{} ),
+  ...>          Enum.into( [ { "a", "4" }, { "b", "5" }, { "c", "6" } ], %{} ) ]
+  iex> Issues.TableFormatter.split_into_columns( list, [ "a", "b", "c" ] )
+  [ [ "1", "4" ], [ "2", "5" ], [ "3", "6" ] ]
+  """
   def split_into_columns( rows, headers ) do
     for header <- headers do
       for row <- rows, do: printable( row[ header ] )

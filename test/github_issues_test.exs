@@ -1,7 +1,6 @@
 defmodule GithubIssuesTest do
 
   use ExUnit.Case
-  doctest Issues
 
   import Issues.GithubIssues, only: [ parseJson: 1 ]
 
